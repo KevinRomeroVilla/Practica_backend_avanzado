@@ -7,6 +7,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const LoginController = require('./routes/apiv1/loginController')
+const jwtAuthMiddleware = require('./lib/jwtAuthMiddleware')
 
 const { isAPI } = require('./lib/utils');
 require('./models'); // Connect DB & register models
@@ -43,7 +44,7 @@ const loginController = new LoginController();
 /**
  * API v1 routes
  */
-app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
+app.use('/apiv1/anuncios', jwtAuthMiddleware, require('./routes/apiv1/anuncios'));
 app.use('/api/authenticate',   loginController.postJWT);
 
 /**
