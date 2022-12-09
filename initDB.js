@@ -1,7 +1,7 @@
 'use strict';
 
 const { askUser } = require('./lib/utils');
-const { mongoose, connectMongoose, Anuncio } = require('./models');
+const { mongoose, connectMongoose, Anuncio, Usuario } = require('./models');
 
 const ANUNCIOS_JSON = './anuncios.json';
 
@@ -23,6 +23,21 @@ async function main() {
   // Inicializar nuestros modelos
   const anunciosResult = await initAnuncios(ANUNCIOS_JSON);
   console.log(`\nAnuncios: Deleted ${anunciosResult.deletedCount}, loaded ${anunciosResult.loadedCount} from ${ANUNCIOS_JSON}`);
+
+  //inicializar usuarios
+
+  await initUsuarios();
+  async function initUsuarios() {
+    // borrar todos los documentos de usuario
+    const deleted = await Usuario.deleteMany();
+    console.log(`Eliminados ${deleted.deletedCount} usuarios.`);
+  
+    // crear usuarios iniciales
+    const inserted = await Usuario.insertMany([
+      { email: 'user@example.com', password: '1234' },
+    ]);
+    console.log(`Creados ${inserted.length} usuarios.`);
+  }
 
   // Cuando termino, cierro la conexión a la BD
   await mongoose.connection.close();
