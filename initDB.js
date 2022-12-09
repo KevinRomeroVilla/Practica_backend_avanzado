@@ -34,11 +34,11 @@ async function main() {
   
     // crear usuarios iniciales
     const inserted = await Usuario.insertMany([
-      { email: 'user@example.com', password: '1234' },
+      { email: 'user@example.com', password: await Usuario.hashPassword('1234') },
     ]);
     console.log(`Creados ${inserted.length} usuarios.`);
   }
-
+  
   // Cuando termino, cierro la conexión a la BD
   await mongoose.connection.close();
   console.log('\nDone.');

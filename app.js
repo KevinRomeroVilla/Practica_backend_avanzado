@@ -6,6 +6,7 @@ const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const LoginController = require('./routes/apiv1/loginController')
 
 const { isAPI } = require('./lib/utils');
 require('./models'); // Connect DB & register models
@@ -37,10 +38,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', require('./routes/index'));
 app.use('/anuncios', require('./routes/anuncios'));
 
+const loginController = new LoginController();
+
 /**
  * API v1 routes
  */
 app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
+app.use('/api/authenticate',   loginController.postJWT);
 
 /**
  * Error handlers
