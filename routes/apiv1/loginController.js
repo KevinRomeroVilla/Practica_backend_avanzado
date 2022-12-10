@@ -27,9 +27,8 @@ class LoginController {
       }
 
       // si existe y la contraseña coincide
-      const keytoken="lñi234ljasdfokuasdf";
       // generar un token JWT con su _id
-      const token = jwt.sign({ _id: usuario._id }, keytoken, {
+      const token = jwt.sign({ _id: usuario._id }, process.env.JWT_SECRET, {
         expiresIn: '2d'
       });
 
