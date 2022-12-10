@@ -7,3 +7,6 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+    <% getLocales().forEach(locale => { %>
+      <a href="/change-locale/<%=locale%>"><%=locale%></a>&nbsp;
+    <% }) %>

@@ -41,6 +41,7 @@ app.use(i18n.init);
  * Website routes
  */
 app.use('/', require('./routes/index'));
+app.use('/change-locale', require('./routes/change-locale'));
 app.use('/anuncios', require('./routes/anuncios'));
 
 const loginController = new LoginController();
